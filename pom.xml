@@ -286,7 +286,7 @@
                 <version>2.2</version>
                 <configuration>
                     <path>/Deli</path>
-                    <port>6600</port>
+                    <port>6610</port>
                 </configuration>
             </plugin>
             <plugin>
@@ -295,7 +295,7 @@
                 <version>9.4.15.v20190215</version>
                 <configuration>
                     <httpConnector>
-                        <port>6600</port>
+                        <port>6610</port>
                     </httpConnector>
                     <webApp>
                         <contextPath>/Deli</contextPath>

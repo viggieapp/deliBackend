@@ -2,6 +2,8 @@ package net.simihost.deli.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.Filter;
+
 /**
  *
  * Created by Rashed on  18/03/2019
@@ -22,5 +24,11 @@ public class CamelAppInitializer extends AbstractAnnotationConfigDispatcherServl
     @Override
     protected String[] getServletMappings() {
         return new String[] { "/" };
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        Filter [] singleton = { new CORSFilter() };
+        return singleton;
     }
 }

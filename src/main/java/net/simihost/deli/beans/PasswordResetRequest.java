@@ -6,7 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 /**
  *
- * @author Ruba Hamad on 23/05/2019
+ * Created by Rashed on 23/05/2019
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)

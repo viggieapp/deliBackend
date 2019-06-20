@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  *
- * @author Ruba Hamad on 15/04/2019
+ * Created by Rashed on 15/04/2019
  *
  */
 public enum Gender {

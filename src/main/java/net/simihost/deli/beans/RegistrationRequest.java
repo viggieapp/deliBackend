@@ -20,7 +20,7 @@ import java.util.Date;
 
 /**
  *
- * @author Ruba Hamad on 23/05/2019
+ * Created by Rashed on 23/05/2019
  *
  */
 @FieldMatch(first = "password", second = "confirmedPassword", message = "password field must match confirmedPassword.")

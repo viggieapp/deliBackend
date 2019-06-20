@@ -13,14 +13,14 @@ import java.util.*;
  */
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
-@Table(name="admins")
-public class Admin extends BaseEntity {
+@Table(name="orders")
+public class Order extends BaseEntity {
 
     private static final long serialVersionUID = 3344585642081549555L;
 
     @JsonUnwrapped
     @Embedded
-    private AdminDetails adminDetails;
+    private OrderDetails orderDetails;
     @Column(nullable = false)
     private boolean enabled;
     @Column(nullable = false)
@@ -35,25 +35,23 @@ public class Admin extends BaseEntity {
     @JoinTable(name = "admin_roles", joinColumns = @JoinColumn(name = "admin_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    public Admin() {}
+    public Order() {}
 
-    public Admin(AdminDetails details) {
-        this.adminDetails = new AdminDetails();
-        this.adminDetails.setFullName(details.getFullName());
-        this.adminDetails.setEmail(details.getEmail());
-        this.adminDetails.setPassword(details.getPassword());
-        this.adminDetails.setConfirmedPassword(details.getConfirmedPassword());
-        this.adminDetails.setBirthDate(details.getBirthDate());
-        this.adminDetails.setGender(details.getGender());
-        this.adminDetails.setAddress(details.getAddress());
+    public Order(OrderDetails details) {
+        this.orderDetails = new OrderDetails();
+        this.orderDetails.setOrderId(details.getOrderId());
+        this.orderDetails.setCustomerId(details.getCustomerId());
+        this.orderDetails.setShippingAmount(details.getShippingAmount());
+        this.orderDetails.setItems(details.getItems());
+        this.orderDetails.setTotalPaid(details.getTotalPaid());
     }
 
-    public AdminDetails getAdminDetails() {
-        return adminDetails;
+    public OrderDetails getOrderDetails() {
+        return orderDetails;
     }
 
-    public void setAdminDetails(AdminDetails adminDetails) {
-        this.adminDetails = adminDetails;
+    public void setOrderDetails(OrderDetails orderDetails) {
+        this.orderDetails = orderDetails;
     }
 
     public boolean isEnabled() {
@@ -112,25 +110,26 @@ public class Admin extends BaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Admin admin = (Admin) o;
-        return enabled == admin.enabled &&
-                locked == admin.locked &&
-                hasLoggedOut == admin.hasLoggedOut &&
-                loginTryCount == admin.loginTryCount &&
-                Objects.equals(adminDetails, admin.adminDetails) &&
-                Objects.equals(disabledDate, admin.disabledDate) &&
-                Objects.equals(roles, admin.roles);
+        Order order = (Order) o;
+        return enabled == order.enabled &&
+                locked == order.locked &&
+                hasLoggedOut == order.hasLoggedOut &&
+                loginTryCount == order.loginTryCount &&
+                Objects.equals(orderDetails, order.orderDetails) &&
+                Objects.equals(disabledDate, order.disabledDate) &&
+                Objects.equals(roles, order.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(adminDetails);
+
+        return Objects.hash(orderDetails, enabled, locked, hasLoggedOut, loginTryCount, disabledDate, roles);
     }
 
     @Override
     public String toString() {
-        return "Admin{" +
-                "adminDetails=" + adminDetails.toString() +
+        return "Order{" +
+                "orderDetails=" + orderDetails +
                 ", enabled=" + enabled +
                 ", locked=" + locked +
                 ", hasLoggedOut=" + hasLoggedOut +

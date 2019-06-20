@@ -14,7 +14,7 @@ public class AppSetting {
     private final static String RESTLET_HOST = "restlet.host";
     private final static String RESTLET_PORT = "restlet.port";
 
-    private final static String API_STATUS_PATH = "api.status.path";
+    private final static String API_ORDER_PATH = "api.order.path";
     private final static String API_ADMIN_PATH = "api.admin.path";
     private final static String API_USER_PATH = "api.user.path";
     private final static String API_ADMINS_PATH = "api.admins.path";
@@ -68,8 +68,8 @@ public class AppSetting {
         return env.getRequiredProperty(RESTLET_PORT);
     }
 
-    public String getApiStatusPath() {
-        return env.getRequiredProperty(API_STATUS_PATH);
+    public String getApiOrderPath() {
+        return env.getRequiredProperty(API_ORDER_PATH);
     }
 
     public String getApiAdminPath() {

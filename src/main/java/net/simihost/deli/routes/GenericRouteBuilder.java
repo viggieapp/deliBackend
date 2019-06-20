@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class GenericWmeRouteBuilder extends RouteBuilder {
+public class GenericRouteBuilder extends RouteBuilder {
 
     @Autowired
     private AppSetting appSetting;
@@ -27,12 +27,36 @@ public class GenericWmeRouteBuilder extends RouteBuilder {
                 .host(appSetting.getRestletHost()).port(appSetting.getRestletPort())
                 .bindingMode(RestBindingMode.json);
 
-        String statusAPIPath = appSetting.getApiStatusPath();
+        String orderAPIPath = appSetting.getApiOrderPath();
         String adminAPIPath = appSetting.getApiAdminPath();
         String userAPIPath = appSetting.getApiUserPath();
         String adminUsersAPIPath = adminAPIPath + appSetting.getApiAdminsPath();
         String appUsersAPIPath = adminAPIPath + appSetting.getApiAppUsersPath();
 
+        //OPERATIONS ROUTES
+        rest(orderAPIPath)
+                //1. Get All Orders
+                .get()
+                .produces("application/json")
+                .to("seda:getOrders")
+                //2. Get Order
+                .get("{id}")
+                .produces("application/json")
+                .outType(OrderDTO.class)
+                .to("seda:getOrder")
+                //3. Add Order
+                .post()
+                .consumes("application/json").produces("application/json")
+                .type(OrderDTO.class).outType(OrderDTO.class)
+                .to("seda:addOrder")
+                //4. Edit Order
+                .put("{id}")
+                .consumes("application/json").produces("application/json")
+                .type(OrderDTO.class).outType(OrderDTO.class)
+                .to("seda:updateOrder")
+                //5. Delete Order
+                .delete("{id}")
+                .to("seda:deleteOrder");
 
         // ADMIN USERS ROUTES
         rest(adminUsersAPIPath)

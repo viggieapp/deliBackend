@@ -19,7 +19,7 @@ public class AdminDTO {
     private String email;
     @JsonIgnore
     private String password;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private Date birthDate;
     private Gender gender;
     private String address;

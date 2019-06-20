@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  *
- * @author Ruba Hamad on 25/05/2019
+ * Created by Rashed on 25/05/2019
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
