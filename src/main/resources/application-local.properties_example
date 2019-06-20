@@ -1,0 +1,63 @@
+#################### Data Source ####################
+dataSource.driverClassName = com.mysql.jdbc.Driver
+dataSource.url = jdbc:mysql://localhost:3306/deli
+dataSource.username = root
+dataSource.password = root
+
+#################### Hibernate ####################
+hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+hibernate.show_sql = false
+hibernate.format_sql = false
+hibernate.generate_statistics = false
+
+#################### Hikari Connection Pooling ####################
+hikari.poolname = deli_pool1
+hikari.useSSL = false
+hikari.cachePrepStmts = true
+hikari.prepStmtCacheSize = 250
+hikari.prepStmtCacheSqlLimit = 2048
+hikari.useServerPrepStmts = true
+hikari.max.pool = 2
+
+#################### API URLs ####################
+
+##########  Deli Gateway  ##########
+gmpp.GmppIsAlive = http://www.mocky.io/v2/5cf1980d300000d16c00bf9c
+gmpp.GmppPublicKey = http://www.mocky.io/v2/5cf1980d300000d16c00bf9c
+gmpp.GmppTransactionStatus = http://www.mocky.io/v2/5cf1b037300000bac900bfe4
+gmpp.GmppRegisterConsumer =  http://www.mocky.io/v2/5cf2bb683300001e17d0d109
+gmpp.GmppPayment = http://www.mocky.io/v2/5cf2ffc93300000b60d0d15a
+gmpp.GmppTransfer = http://www.mocky.io/v2/5cf2ffc93300000b60d0d15a
+gmpp.GmppCashOut = http://www.mocky.io/v2/5cf3bb20330000321975858f
+gmpp.GmppPurchase = http://www.mocky.io/v2/5cf3c40133000018187585a2
+gmpp.GmppTransferWalletToAccount = http://www.mocky.io/v2/5cf3c40133000018187585a2
+gmpp.GmppTransferAccountToWallet = http://www.mocky.io/v2/5cf3c40133000018187585a2
+gmpp.GmppLockAccount =  http://www.mocky.io/v2/5cf3dbc9330000ff187585cc
+gmpp.GmppUnlockAccount =  http://www.mocky.io/v2/5cf3dbc9330000ff187585c
+gmpp.GmppRegisterConsumerAtMerchant = http://www.mocky.io/v2/5d063b683200007b00d78dd2
+gmpp.GmppCompleteConsumerRegistration = http://www.mocky.io/v2/5d063ca43200007b00d78dd6
+gmpp.GmppCustomerInfo = http://www.mocky.io/v2/5d063db73200007b00d78dd9
+gmpp.GmppUpdateCustomerInfo = http://www.mocky.io/v2/5d063e773200006200d78ddd
+gmpp.GmppDistribute =  http://www.mocky.io/v2/5d063ebd3200005000d78dde
+gmpp.GmppCashIn = http://www.mocky.io/v2/5d063f073000007200051c21
+gmpp.GmppCompleteCashOutAtMerchant = http://www.mocky.io/v2/5d063f5d3000005d00051c22
+gmpp.GmppSVABalance = http://www.mocky.io/v2/5d063fb53000005400051c23
+gmpp.GmppLastTransactions =   http://www.mocky.io/v2/5d0692e03000005900051cc0
+gmpp.GmppChangePIN = http://www.mocky.io/v2/5d0640613000006300051c25
+
+########## CoreBanking  Payment Gateway ##########
+
+#################### ####################
+ipin.generate.username = Deli
+ipin.generate.password = Deli123321
+
+#################### Quartz ####################
+quartz.properties.location = /quartz/quartz-dev.properties
+
+#################### HTTPs Config ####################
+https.keystore.file = /var/lib/tomcat7/simihost_webapps/certs/CustomerCoreApi.jks
+https.keystore.password = 123456
+https.keystore.key.password = 123456
+
+https.truststore.file = /var/lib/tomcat7/simihost_webapps/certs/Truststore.jks
+https.truststore.password = 123456

@@ -1,0 +1,9 @@
+target/
+.idea/
+*/.idea/**
+DeliBackend.iml
+src/main/main.iml
+src/main/resources/application-local.properties
+src/main/resources/logback/local_logback.xml
+src/main/resources/quartz/quartz-local.properties
+catalina.base_IS_UNDERFINED/**
