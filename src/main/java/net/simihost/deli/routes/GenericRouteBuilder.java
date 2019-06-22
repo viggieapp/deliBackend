@@ -24,7 +24,10 @@ public class GenericRouteBuilder extends RouteBuilder {
     public void configure() {
 
         restConfiguration().component("restlet")
-                .host(appSetting.getRestletHost()).port(appSetting.getRestletPort())
+                .host(appSetting.getRestletHost())
+                .port(appSetting.getRestletPort())
+                .enableCORS(true)
+                .corsHeaderProperty("Access-Control-Allow-Origin","*")
                 .bindingMode(RestBindingMode.json);
 
         String orderAPIPath = appSetting.getApiOrderPath();
