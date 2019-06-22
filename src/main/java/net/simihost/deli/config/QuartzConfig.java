@@ -53,7 +53,7 @@ public class QuartzConfig {
         quartzScheduler.setDataSource(configureDataSource());
         quartzScheduler.setTransactionManager(transactionManager);
         quartzScheduler.setOverwriteExistingJobs(true);
-        quartzScheduler.setSchedulerName("wnbapp-quartz-scheduler");
+        quartzScheduler.setSchedulerName("deli-quartz-scheduler");
 
         AutowiringSpringBeanJobFactory jobFactory = new AutowiringSpringBeanJobFactory();
         jobFactory.setApplicationContext(applicationContext);
@@ -71,7 +71,7 @@ public class QuartzConfig {
     public JobDetailFactoryBean gatewaysKeysRefreshJob() {
         JobDetailFactoryBean jobDetailFactory = new JobDetailFactoryBean();
         jobDetailFactory.setJobClass(DeliJob.class);
-        jobDetailFactory.setGroup("refreshing-keys-quartz");
+        jobDetailFactory.setGroup("refreshing-orders-quartz");
         jobDetailFactory.setDurability(true);
         return jobDetailFactory;
     }
@@ -80,8 +80,8 @@ public class QuartzConfig {
     public CronTriggerFactoryBean gatewaysKeysRefreshTrigger() {
         CronTriggerFactoryBean cronTriggerFactoryBean = new CronTriggerFactoryBean();
         cronTriggerFactoryBean.setJobDetail(gatewaysKeysRefreshJob().getObject());
-        cronTriggerFactoryBean.setCronExpression(environment.getRequiredProperty("quartz.cron.refreshKeys"));
-        cronTriggerFactoryBean.setGroup("refreshing-keys-quartz");
+        cronTriggerFactoryBean.setCronExpression(environment.getRequiredProperty("quartz.cron.refreshOrders"));
+        cronTriggerFactoryBean.setGroup("refreshing-orders-quartz");
         return cronTriggerFactoryBean;
     }
 

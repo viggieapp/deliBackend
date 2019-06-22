@@ -20,7 +20,7 @@ public class DeliJob extends QuartzJobBean {
 
     protected void executeInternal(JobExecutionContext ctx) {
         try {
-            logger.info("Gateways Keys Refreshed Successfully!");
+            logger.info("Orders Refreshed Successfully!");
         } catch (Exception e) {
             logger.warn("Stack Trace: {}",e.getMessage(), e);
         }

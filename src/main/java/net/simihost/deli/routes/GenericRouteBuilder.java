@@ -3,6 +3,8 @@ package net.simihost.deli.routes;
 import net.simihost.deli.beans.*;
 import net.simihost.deli.beans.account.UserDTO;
 import net.simihost.deli.config.AppSetting;
+import net.simihost.deli.mapper.MageDataFormat;
+import net.simihost.deli.services.mage.MageService;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -20,9 +22,12 @@ public class GenericRouteBuilder extends RouteBuilder {
     @Autowired
     private AppSetting appSetting;
 
+    @Autowired
+    private MageDataFormat mageDataFormat;
+
     @Override
     public void configure() {
-
+        String mageOrderApiUrl = appSetting.getMageGatewayApiUrl("getOrder");
         restConfiguration().component("restlet")
                 .host(appSetting.getRestletHost())
                 .port(appSetting.getRestletPort())
@@ -132,10 +137,15 @@ public class GenericRouteBuilder extends RouteBuilder {
 
         // QUARTZ JOB
         from("quartz2://refreshing-keys-quartz?cron=".concat(appSetting.getRefreshKeysCronExpression()))
-                .to("seda:quartzJob");
+                .to("seda:quartzJob")
+                .log(LoggingLevel.INFO, "QUARTZ >>><<< QUARTZ");
 
         from("seda:quartzJob")
-                .log(LoggingLevel.INFO, "QUARTZ >>><<< QUARTZ");
+                .log(LoggingLevel.INFO, "Get Orders DTO Request")
+                .to(mageOrderApiUrl)
+                .unmarshal(mageDataFormat)
+                .log(LoggingLevel.INFO, "Get Orders Response  - $simple{body}")
+                .bean(MageService.class, "processTransactionResponse");
 
         // EXCEPTION ROUTES
         from("direct:validationError")
