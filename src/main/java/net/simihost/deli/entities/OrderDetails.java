@@ -16,14 +16,14 @@ public class OrderDetails {
     private String orderId;
     @Column(name = "customerId", nullable = false)
     private String customerId;
-    @Column(name = "totalPaid", nullable = false)
+    @Column(name = "totalPaid", nullable = true)
     private String totalPaid;
-    @Column(name = "shippingAmount", nullable = false)
+    @Column(name = "shippingAmount", nullable = true)
     private Double shippingAmount;
     @Column(name = "Items", nullable = false)
     private String Items;
-    @Column(name = "address", nullable = false)
-    private String address;
+    @Column(name = "created_at", nullable = false)
+    private String created_at;
 
     public String getOrderId() {
         return orderId;
@@ -65,12 +65,12 @@ public class OrderDetails {
         Items = items;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
     @Override
@@ -82,14 +82,14 @@ public class OrderDetails {
                 Objects.equals(customerId, that.customerId) &&
                 Objects.equals(totalPaid, that.totalPaid) &&
                 Objects.equals(shippingAmount, that.shippingAmount) &&
-                Items == that.Items &&
-                Objects.equals(address, that.address);
+                Objects.equals(Items, that.Items) &&
+                Objects.equals(created_at, that.created_at);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(orderId, customerId, totalPaid, shippingAmount, Items, address);
+        return Objects.hash(orderId, customerId, totalPaid, shippingAmount, Items, created_at);
     }
 
     @Override
@@ -99,8 +99,8 @@ public class OrderDetails {
                 ", customerId='" + customerId + '\'' +
                 ", totalPaid='" + totalPaid + '\'' +
                 ", shippingAmount=" + shippingAmount +
-                ", Items=" + Items +
-                ", address='" + address + '\'' +
+                ", Items='" + Items + '\'' +
+                ", created_at='" + created_at + '\'' +
                 '}';
     }
 }

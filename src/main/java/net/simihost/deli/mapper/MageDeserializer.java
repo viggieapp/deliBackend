@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import net.simihost.deli.config.AppSetting;
 import net.simihost.deli.entities.Order;
 import org.slf4j.Logger;
@@ -51,21 +52,29 @@ public class MageDeserializer<T extends Order> extends JsonDeserializer<Order> {
         return object;
     }
 
-    private void setGmppTransactionFields(Order object, JsonNode node) {
+    private void setGmppTransactionFields(Order object, JsonNode node1) {
         //TODO setup errorCodes and errorMessages
         logger.info("object mapper: "+object.toString());
-        if (node.hasNonNull("orderId"))
-            object.getOrderDetails().setOrderId(node.get("orderId").asText());
-        if (node.hasNonNull("customerId"))
-            object.getOrderDetails().setCustomerId( node.get("customerId").asText());
-        if (node.hasNonNull("totalPaid"))
-            object.getOrderDetails().setTotalPaid(node.get("totalPaid").asText());
-        if (node.hasNonNull("shippingAmount"))
-            object.getOrderDetails().setShippingAmount(node.get("shippingAmount").asDouble());
-        if (node.hasNonNull("status"))
-            object.setStatus(node.get("status").asText());
-        if (node.hasNonNull("items"))
-            object.getOrderDetails().setItems( node.get("items").asText());
 
+        if(node1.hasNonNull("items")){
+            ArrayNode node2= (ArrayNode) node1.get("items");
+            for(JsonNode node:node2){
+                if (node.hasNonNull("order_id"))
+                    object.getOrderDetails().setOrderId(node.get("order_id").asText());
+                if (node.hasNonNull("customer_id"))
+                    object.getOrderDetails().setCustomerId( node.get("customer_id").asText());
+                if (node.hasNonNull("created_at"))
+                    object.getOrderDetails().setCreated_at( node.get("created_at").asText());
+                if (node.hasNonNull("totalPaid"))
+                    object.getOrderDetails().setTotalPaid(node.get("totalPaid").asText());
+                if (node.hasNonNull("shippingAmount"))
+                    object.getOrderDetails().setShippingAmount(node.get("shippingAmount").asDouble());
+                if (node.hasNonNull("status"))
+                    object.setStatus(node.get("status").asText());
+                if (node.hasNonNull("items"))
+                    object.getOrderDetails().setItems( node.get("items").asText());
+            }
+
+        }
     }
 }

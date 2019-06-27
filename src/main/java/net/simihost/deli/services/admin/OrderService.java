@@ -37,10 +37,12 @@ public class OrderService {
 
     }
 
+    public OrderDTO newOrderFromMage(Order order) {
+        return OrderDTO.convertToDTO(saveOrder(order));
+    }
     public OrderDTO getOrder(Long orderId) {
         return OrderDTO.convertToDTO(findOrder(orderId));
     }
-
     public OrderDTO addOrder(OrderDTO orderDTO) {
         Order order = mapToNewOrder(orderDTO);
         orderRepository.save(order);
@@ -52,6 +54,11 @@ public class OrderService {
         return updateOrder(order, orderDTO);
     }
 
+    public Order saveOrder(Order order) {
+        orderRepository.save(order);
+        return order;
+    }
+
     public void deleteOrder(Long orderId) {
         Order order = findOrder(orderId);
         order.setStatus("Inactive");
@@ -59,7 +66,7 @@ public class OrderService {
     }
 
     private List<Order> findOrders() {
-        return orderRepository.findByStatus("Active");
+        return orderRepository.findAll();
     }
 
     private Order findOrder(Long orderId) {
@@ -85,8 +92,6 @@ public class OrderService {
             order.getOrderDetails().setItems(request.getItems());
         if (request.getTotalPaid() != null)
             order.getOrderDetails().setTotalPaid(request.getTotalPaid());
-        if (request.getAddress() != null)
-            order.getOrderDetails().setAddress(request.getAddress());
 
         orderRepository.save(order);
         return OrderDTO.convertToDTO(order);
@@ -99,7 +104,6 @@ public class OrderService {
         orderDetails.setShippingAmount(orderDTO.getShippingAmount());
         orderDetails.setItems(orderDTO.getItems());
         orderDetails.setTotalPaid(orderDTO.getTotalPaid());
-        orderDetails.setAddress(orderDTO.getAddress());
 
         Order order = new Order(orderDetails);
         order.setEnabled(true);

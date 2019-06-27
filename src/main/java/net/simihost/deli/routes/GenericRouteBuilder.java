@@ -5,7 +5,9 @@ import net.simihost.deli.beans.account.UserDTO;
 import net.simihost.deli.config.AppSetting;
 import net.simihost.deli.mapper.MageDataFormat;
 import net.simihost.deli.services.mage.MageService;
+import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ public class GenericRouteBuilder extends RouteBuilder {
 
     @Override
     public void configure() {
+
         String mageOrderApiUrl = appSetting.getMageGatewayApiUrl("getOrder");
         restConfiguration().component("restlet")
                 .host(appSetting.getRestletHost())
@@ -35,11 +38,22 @@ public class GenericRouteBuilder extends RouteBuilder {
                 .corsHeaderProperty("Access-Control-Allow-Origin","*")
                 .bindingMode(RestBindingMode.json);
 
+        String mageNewOrderAPIPath = appSetting.getApiMageNewOrderPath();
+
+
         String orderAPIPath = appSetting.getApiOrderPath();
         String adminAPIPath = appSetting.getApiAdminPath();
         String userAPIPath = appSetting.getApiUserPath();
         String adminUsersAPIPath = adminAPIPath + appSetting.getApiAdminsPath();
         String appUsersAPIPath = adminAPIPath + appSetting.getApiAppUsersPath();
+
+        //MOBILE APP ROUTES
+        rest(mageNewOrderAPIPath)
+                //1. Get New Order
+                .get("{id}")
+                .produces("application/json")
+                .outType(OrderDTO.class)
+                .to("seda:newOrderFromMage");
 
         //OPERATIONS ROUTES
         rest(orderAPIPath)
@@ -137,11 +151,16 @@ public class GenericRouteBuilder extends RouteBuilder {
 
         // QUARTZ JOB
         from("quartz2://refreshing-keys-quartz?cron=".concat(appSetting.getRefreshKeysCronExpression()))
-                .to("seda:quartzJob")
+                //.to("seda:quartzJob")
                 .log(LoggingLevel.INFO, "QUARTZ >>><<< QUARTZ");
 
         from("seda:quartzJob")
                 .log(LoggingLevel.INFO, "Get Orders DTO Request")
+                .setHeader("Authorization", constant("Bearer 7kod7nurljeab3nkqvflyqe1m9lq4vqy"))
+                .process(new Processor(){
+                    public void process(Exchange exchange) throws Exception {
+                        exchange.getIn().setHeader(Exchange.AUTHENTICATION,"Bearer 7kod7nurljeab3nkqvflyqe1m9lq4vqy");
+                    }})
                 .to(mageOrderApiUrl)
                 .unmarshal(mageDataFormat)
                 .log(LoggingLevel.INFO, "Get Orders Response  - $simple{body}")

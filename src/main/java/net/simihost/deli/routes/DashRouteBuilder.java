@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class OrderRouteBuilder extends RouteBuilder {
+public class DashRouteBuilder extends RouteBuilder {
 
     @Autowired
     private AppSetting appSetting;

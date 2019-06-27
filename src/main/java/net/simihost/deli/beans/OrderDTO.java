@@ -27,7 +27,7 @@ public class OrderDTO {
     private String totalPaid;
     private Double shippingAmount;
     private String Items;
-    private String address;
+    private String created_at;
 
     public Long getId() {
         return id;
@@ -93,12 +93,12 @@ public class OrderDTO {
         Items = items;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCreated_at() {
+        return created_at;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 
     public static OrderDTO convertToDTO(Order entity) {
@@ -131,14 +131,15 @@ public class OrderDTO {
     @Override
     public String toString() {
         return "OrderDTO{" +
-                "orderId='" + orderId + '\'' +
+                "id=" + id +
+                ", orderId='" + orderId + '\'' +
                 ", customerId='" + customerId + '\'' +
                 ", Status='" + Status + '\'' +
-                ", createdAt='" + createdAt + '\'' +
+                ", createdAt=" + createdAt +
                 ", totalPaid='" + totalPaid + '\'' +
                 ", shippingAmount=" + shippingAmount +
-                ", Items=" + Items +
-                ", address='" + address + '\'' +
+                ", Items='" + Items + '\'' +
+                ", created_at='" + created_at + '\'' +
                 '}';
     }
 }

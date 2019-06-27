@@ -19,6 +19,10 @@ public class AppSetting {
     private final static String PASSWORD_LENGTH = "password.length";
     private final static String REFRESH_KEYS_CRON_EXPRESSION = "quartz.cron.refreshKeys";
 
+    private final static String API_MAGE_NEW_ORDER_PATH = "api.mage.getNewOrder.path";
+    private final static String MAGE_GET_NEW_ORDER = "mage.getNewOrder";
+
+
     @Autowired
     private Environment env;
 
@@ -55,5 +59,13 @@ public class AppSetting {
 
     public String getRefreshKeysCronExpression() {
         return env.getRequiredProperty(REFRESH_KEYS_CRON_EXPRESSION);
+    }
+
+    public String getApiMageNewOrderPath() {
+        return env.getRequiredProperty(API_MAGE_NEW_ORDER_PATH);
+    }
+
+    public String getMageNewOrderAPIUrl() {
+        return env.getRequiredProperty(MAGE_GET_NEW_ORDER);
     }
 }
