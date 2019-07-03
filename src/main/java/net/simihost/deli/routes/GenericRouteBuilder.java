@@ -31,7 +31,9 @@ public class GenericRouteBuilder extends RouteBuilder {
     public void configure() {
 
         String mageOrderApiUrl = appSetting.getMageGatewayApiUrl("getOrder");
-        restConfiguration().component("restlet")
+        restConfiguration()
+                .endpointProperty("handlers","securityHandler")
+                .component("jetty")
                 .host(appSetting.getRestletHost())
                 .port(appSetting.getRestletPort())
                 .enableCORS(true)
@@ -150,9 +152,9 @@ public class GenericRouteBuilder extends RouteBuilder {
 
 
         // QUARTZ JOB
-        from("quartz2://refreshing-keys-quartz?cron=".concat(appSetting.getRefreshKeysCronExpression()))
+        //from("quartz2://refreshing-keys-quartz?cron=".concat(appSetting.getRefreshKeysCronExpression()))
                 //.to("seda:quartzJob")
-                .log(LoggingLevel.INFO, "QUARTZ >>><<< QUARTZ");
+                //.log(LoggingLevel.INFO, "QUARTZ >>><<< QUARTZ");
 
         from("seda:quartzJob")
                 .log(LoggingLevel.INFO, "Get Orders DTO Request")

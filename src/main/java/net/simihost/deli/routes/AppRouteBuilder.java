@@ -4,6 +4,7 @@ import net.simihost.deli.config.AppSetting;
 import net.simihost.deli.exceptions.AdminNotFoundException;
 import net.simihost.deli.exceptions.ApplicationRuntimeException;
 import net.simihost.deli.mapper.MageDataFormat;
+import net.simihost.deli.services.admin.OrderService;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.Processor;
@@ -62,9 +63,9 @@ public class AppRouteBuilder extends RouteBuilder {
                 .marshal(mageDataFormat)
                 .recipientList(exchangeProperty("url"))
                 .unmarshal(mageDataFormat)
-                .log(LoggingLevel.INFO, " New Order $simple{body} From mage");
-                //.bean(OrderService.class, "newOrderFromMage($simple{body})")
-                //.log(LoggingLevel.INFO, " New Order Response  - $simple{body}");
+                .log(LoggingLevel.INFO, " New Order $simple{body} From mage")
+                .bean(OrderService.class, "newOrderFromMage($simple{body})")
+                .log(LoggingLevel.INFO, " New Order Response  - $simple{body}");
 
     }
 }
