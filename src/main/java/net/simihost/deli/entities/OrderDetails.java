@@ -20,8 +20,8 @@ public class OrderDetails {
     private String totalPaid;
     @Column(name = "shippingAmount", nullable = true)
     private Double shippingAmount;
-    @Column(name = "Items", nullable = false)
-    private String Items;
+    @Column(name = "items", nullable = false)
+    private String items;
     @Column(name = "created_at", nullable = false)
     private String created_at;
 
@@ -58,11 +58,11 @@ public class OrderDetails {
     }
 
     public String getItems() {
-        return Items;
+        return items;
     }
 
     public void setItems(String items) {
-        Items = items;
+        this.items = items;
     }
 
     public String getCreated_at() {
@@ -82,14 +82,14 @@ public class OrderDetails {
                 Objects.equals(customerId, that.customerId) &&
                 Objects.equals(totalPaid, that.totalPaid) &&
                 Objects.equals(shippingAmount, that.shippingAmount) &&
-                Objects.equals(Items, that.Items) &&
+                Objects.equals(items, that.items) &&
                 Objects.equals(created_at, that.created_at);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(orderId, customerId, totalPaid, shippingAmount, Items, created_at);
+        return Objects.hash(orderId, customerId, totalPaid, shippingAmount, items, created_at);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class OrderDetails {
                 ", customerId='" + customerId + '\'' +
                 ", totalPaid='" + totalPaid + '\'' +
                 ", shippingAmount=" + shippingAmount +
-                ", Items='" + Items + '\'' +
+                ", items='" + items + '\'' +
                 ", created_at='" + created_at + '\'' +
                 '}';
     }

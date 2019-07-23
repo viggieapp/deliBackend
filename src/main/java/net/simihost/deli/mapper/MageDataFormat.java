@@ -45,7 +45,7 @@ public class MageDataFormat extends ServiceSupport implements DataFormat {
     @Override
     public Object unmarshal(Exchange exchange, InputStream inputStream) throws Exception {
         String response = exchange.getContext().getTypeConverter().mandatoryConvertTo(String.class, inputStream);
-        logger.debug("Deli From Mage : {}", response);
+        logger.debug("Deli From Mage : {}",response);
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         Order order= new Order();

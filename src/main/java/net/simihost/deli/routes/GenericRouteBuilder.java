@@ -37,7 +37,9 @@ public class GenericRouteBuilder extends RouteBuilder {
                 .host(appSetting.getRestletHost())
                 .port(appSetting.getRestletPort())
                 .enableCORS(true)
-                .corsHeaderProperty("Access-Control-Allow-Origin","*")
+                .corsHeaderProperty("Access-Control-Allow-Headers", "authorization,content-type")
+                .corsHeaderProperty("Access-Control-Allow-Credentials", "true")
+                .corsHeaderProperty("Access-Control-Allow-Origin","http://localhost:4200")
                 .bindingMode(RestBindingMode.json);
 
         String mageNewOrderAPIPath = appSetting.getApiMageNewOrderPath();

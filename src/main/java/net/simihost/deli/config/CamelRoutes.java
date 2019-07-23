@@ -55,6 +55,7 @@ public class CamelRoutes extends CamelConfiguration {
         ConstraintMapping constraintMapping=new ConstraintMapping();
         constraintMapping.setPathSpec("/*");
         constraintMapping.setConstraint(constraint());
+        constraintMapping.setMethodOmissions(new String[]{"OPTIONS"});
         System.out.println("2#######################");
         return constraintMapping;
     }

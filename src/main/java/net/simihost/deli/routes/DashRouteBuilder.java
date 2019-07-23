@@ -44,7 +44,9 @@ public class DashRouteBuilder extends RouteBuilder {
         from("seda:getOrders")
                 .log(LoggingLevel.INFO, "Get All Orders")
                 .bean(OrderService.class, "getOrders")
-                .log(LoggingLevel.INFO, "Get Orders Response - $simple{body}");
+                .log(LoggingLevel.INFO, "Get Orders Response - $simple{body}")
+                .setHeader("Access-Control-Allow-Origin",constant("http://localhost:4200"))
+                .setHeader("Access-Control-Allow-Credentials", constant(true));
         from("seda:getOrder")
                 .log(LoggingLevel.INFO, "Get Order with Id - $simple{header.id}")
                 .bean(OrderService.class, "getOrder(${header.id})")

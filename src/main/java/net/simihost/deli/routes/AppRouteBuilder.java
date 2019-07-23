@@ -55,13 +55,14 @@ public class AppRouteBuilder extends RouteBuilder {
                 //Get New Order From Mage
                 .log(LoggingLevel.INFO, " New Order From Mage ")
                 .setHeader("Authorization", constant("Bearer 7kod7nurljeab3nkqvflyqe1m9lq4vqy"))
+                .removeHeader(Exchange.HTTP_PATH)
                 .process(new Processor(){
                     public void process(Exchange exchange) throws Exception {
-                        exchange.getIn().setHeader(Exchange.HTTP_URI,getMageNewOrderAPIUrl+queryParams+exchange.getIn().getHeader("id"));
-                        exchange.setProperty("url",getMageNewOrderAPIUrl+queryParams+exchange.getIn().getHeader("id"));
+                        exchange.setProperty("url",getMageNewOrderAPIUrl+queryParams+exchange.getIn().getHeader("id")+"&bridgeEndpoint=true");
                     }})
                 .marshal(mageDataFormat)
                 .recipientList(exchangeProperty("url"))
+                //.convertBodyTo(String.class)
                 .unmarshal(mageDataFormat)
                 .log(LoggingLevel.INFO, " New Order $simple{body} From mage")
                 .bean(OrderService.class, "newOrderFromMage($simple{body})")
